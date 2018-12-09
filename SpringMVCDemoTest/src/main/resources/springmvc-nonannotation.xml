@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx" 
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context 
+         http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd"> 
+	
+	 <mvc:annotation-driven /> 
+<!-- 非注解的完整的配置文件 start -->	
+	<!-- 处理器映射器
+		将bean的name作为url进行查找，需要在配置Handler时指定beanname（就是url）
+	 -->
+	<!--  <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean> -->
+	 
+	 <!-- 处理器适配器
+	 	所有处理器适配器都实现了HandlerAdapter接口
+	  -->
+	 	<!-- <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"></bean> -->
+
+	<!-- 视图解析器
+		解析jsp，默认使用jstl，classpath下要有jstl的包
+	 -->	
+	 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
+<!-- 非注解的完整的配置文件 end -->
+	
+	<!-- 注册controller service dao-->	
+	<!-- 注册dao -->
+	<bean id="loginDao" class="com.companyName.projectName.login.dao.imp.LoginDaoImpl">
+			<property name="jdbcTemplate" ref="jdbcTemplate"></property>		
+	</bean>
+	<!-- 注册service -->
+	<bean id="loginService" class="com.companyName.projectName.login.service.imp.loginServiceImpl">
+		 <property name="loginDao" ref="loginDao"></property> 
+	</bean>
+	
+	<!-- 注册controller -->
+	<bean id="loginController" name="/login" class="com.companyName.projectName.login.controller.LoginController">
+		  <property name="loginServiceImpl" ref="loginService"></property> 
+	</bean>
+	<bean id="loginController2" class="com.companyName.projectName.login.controller.LoginController2">
+		  <property name="loginServiceImpl" ref="loginService"></property> 
+	</bean>
+	
+	<!-- 简单的url映射，可根据不同的请求url调用不同的controller -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/login.action">loginController</prop>
+				<prop key="/login2.action">loginController2</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

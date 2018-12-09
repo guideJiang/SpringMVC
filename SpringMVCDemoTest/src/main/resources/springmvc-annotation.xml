@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:mvc="http://www.springframework.org/schema/mvc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+        xmlns:tx="http://www.springframework.org/schema/tx" 
+        xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/context 
+         http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+         http://www.springframework.org/schema/mvc
+         http://www.springframework.org/schema/mvc/spring-mvc.xsd"> 
+
+	<!-- 对于注解的handler可以单个配置，实际开发中加你使用过得组件扫描 -->
+	<!-- <bean class="handler的路径" /> -->
+	
+	<!-- 设置需要扫描的包，可以扫描全部的包的路径也可只扫描特定的包，如：controller/service等 -->
+	<context:component-scan base-package="com.*">
+		<!-- 除了什么目录下的文件，可以时一个目录下的，也可以时特定文件，也可以时全部的controller -->
+		<!-- <context:exclude-filter type="annotation" expression=""/> -->
+		<!-- 除了com的目录下还可以加入该目录开始扫描 -->
+		<!-- <context:include-filter type="annotation" expression=""/> -->
+	</context:component-scan>
+	
+	<!-- 注解的映射器 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"></bean> -->
+	<!-- 注解适配器 -->
+	<!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"></bean> -->
+	<!-- 使用<mvc:annotation-driven>可以代替上面两个注解映射器和注解适配的配置，、
+	如果时用了这个mvc：annotation-driven 就不需要RequestMappingHandlerMapping 和 RequestMappingHandlerAdapter -->
+	<mvc:annotation-driven></mvc:annotation-driven>
+	
+	<!-- 视图解析器
+		解析jsp，默认使用jstl/需要导入jstl的包；
+		如页面上要使用：<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 配置jsp路径的前缀 -->
+		<property name="prefix" value="/WEB-INF/jsp/"></property>
+		<!-- 配置jsp路径的后缀 -->
+		<property name="suffix" value=".jsp"></property>
+		
+	</bean>
+	
+	
+</beans>
