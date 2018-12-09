@@ -1,7 +1,5 @@
 # SpringMVC
 springMVC注解的方式和非注解的方式的学习和对比
-# SpringMVC
-springMVC注解的方式和非注解的方式的学习和对比
 ## Spring MVC 环境描述
     jdk：jdk1.8
     tomcat： tomcat8.5
